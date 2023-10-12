@@ -6,7 +6,8 @@
       ansible.eda.webhook:
         host: 0.0.0.0
         port: 6666
-        token: tiktok
+        service: snow-webhook
+        token: {{ webhook-token }}
   rules:
     - name: rule1
       condition: event.payload is defined
