@@ -7,7 +7,7 @@
         host: 0.0.0.0
         port: 6666
         service: snow-webhook
-        token: '{{ webhook-token }}'
+        token: '{{ webhook_token }}'
   rules:
     - name: rule1
       condition: event.payload is defined
