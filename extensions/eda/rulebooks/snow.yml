@@ -9,7 +9,7 @@
         service: snow-webhook
         token: '{{ webhook_token }}'
   rules:
-    - name: rule1
+    - name: 
       condition: event.payload is defined
       action:
         print_event:
