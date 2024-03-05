@@ -10,7 +10,7 @@
         token: '{{ webhook_token }}'
   rules:
     - name: rule1
-      condition: event["payload"] is defined
+      condition: event.payload.changes[0].ref.displayId == 'dev'
       action:
         print_event:
           pretty: true
