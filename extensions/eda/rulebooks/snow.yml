@@ -5,12 +5,13 @@
     - name: servicenow
       ansible.eda.webhook:
         host: 0.0.0.0
-        port: 6666
-        service: snow-webhook
+        port: 5555
         token: '{{ webhook_token }}'
+        certfile: '{{ certfile }}'
+        keyfile: '{{ keyfile }}'
   rules:
     - name: rule1
-      condition: event.payload.changes[0].ref.displayId == 'dev'
+      condition: event.payload is defined
       action:
         print_event:
           pretty: true
