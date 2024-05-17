@@ -9,7 +9,7 @@
         token: '{{ webhook_token }}'
         certfile: '{{ certfile }}'
         keyfile: '{{ keyfile }}'
-        catfile: '{{ catfile }}'
+        cafile: '{{ cafile }}'
   rules:
     - name: rule1
       condition: event.payload is defined
