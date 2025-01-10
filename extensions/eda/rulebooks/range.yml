@@ -6,6 +6,6 @@
         limit: 5
   rules:
     - name: Echo
-      condition: true
+      condition: i == 2
       action:
         debug:
