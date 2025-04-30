@@ -5,7 +5,7 @@
 
   tasks:
 
-  - name: Simulate long running op (15 sec), wait for up to 45 sec, poll every 5 sec
-    ansible.builtin.command: /bin/sleep 15
-    async: 45
+  - name: Simulate long running op (300 sec), wait for up to 345 sec, poll every 5 sec
+    ansible.builtin.command: /bin/sleep 300
+    async: 345
     poll: 5
