@@ -3,7 +3,7 @@
   sources:
     - ansible.eda.kafka:
         topics: "{{ kafka_topics | default(['kafka-events-1', 'kafka-events-2']) }}"
-        host: localhost
+        host: host.containers.internal
         port: 9092
         offset: earliest
         encoding: ascii
