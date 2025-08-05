@@ -3,7 +3,7 @@
   sources:
     - ansible.eda.kafka:
         topic_pattern: "{{ kafka_topic_pattern | default('kafka-events') }}"
-        metadata_max_age_ms: "{{ meta_interval | default(300000) }}"
+        metadata_max_age_ms: "{{ meta_interval | default('300000') }}"
 	host: host.containers.internal
         port: 9092
         offset: earliest
