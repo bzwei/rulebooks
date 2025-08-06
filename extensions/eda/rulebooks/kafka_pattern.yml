@@ -4,7 +4,7 @@
     - ansible.eda.kafka:
         topic_pattern: "{{ kafka_topic_pattern | default('kafka-events') }}"
         metadata_max_age_ms: "{{ meta_interval | default('300000') }}"
-        host: "{{ kafka_host: default('host.containers.internal') }}"
+        host: "{{ kafka_host | default('host.containers.internal') }}"
         port: "{{ kafka_port | default(9093) }}"
         offset: "{{ offset | default('latest') }}"
         group_id: "{{ group_id }}"
