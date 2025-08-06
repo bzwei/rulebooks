@@ -6,7 +6,8 @@
         metadata_max_age_ms: "{{ meta_interval | default('300000') }}"
         host: host.containers.internal
         port: 9092
-        offset: latest
+        offset: "{{ offset | default('latest') }}"
+        group_id: "{{ group_id }}"
         encoding: ascii
   rules:
     - name: match kafka event
