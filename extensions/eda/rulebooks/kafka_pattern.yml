@@ -4,26 +4,19 @@
     - ansible.eda.kafka:
         topic_pattern: "{{ kafka_topic_pattern | default('kafka-events') }}"
         metadata_max_age_ms: "{{ meta_interval | default('300000') }}"
-        host: host.containers.internal
-        port: 9092
+        host: "{{ kafka_host: default('host.containers.internal') }}"
+        port: "{{ kafka_port | default(9093) }}"
         offset: "{{ offset | default('latest') }}"
         group_id: "{{ group_id }}"
         encoding: ascii
   rules:
     - name: match kafka event
-      condition: event.body.name == "Produced for PLAINTEXT consumers"
+      condition: event.body.name == "EDA"
       action:
         debug:
-          msg: "Rule fired successfully for PLAINTEXT consumers"
 
     - name: stop
       condition: event.body == "stop"
       action:
         shutdown:
-
-    - name: match kafka event22
-      condition: event.body.name == "Produced for PLAINTEXT consumers 2"
-      action:
-        debug:
-          msg: "Rule fired successfully for PLAINTEXT consumers 2"
 
