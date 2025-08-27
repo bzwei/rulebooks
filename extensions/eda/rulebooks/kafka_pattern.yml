@@ -1,4 +1,4 @@
-- name: test kafka source plugin with plaintext security protocol
+- name: test kafka source plugin with plaintext security protocol and listening to pattern matched topics
   hosts: localhost
   sources:
     - ansible.eda.kafka:
@@ -11,9 +11,10 @@
         encoding: ascii
   rules:
     - name: match kafka event
-      condition: event.body.name == "EDA"
+      condition: event.body.name == "eda"
       action:
         debug:
+          msg: "Rule fired successfully for PLAINTEXT consumers"
 
     - name: stop
       condition: event.body == "stop"
