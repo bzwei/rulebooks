@@ -7,7 +7,7 @@
         host: "{{ kafka_host | default('host.containers.internal') }}"
         port: "{{ kafka_port | default(9093) }}"
         offset: "{{ offset | default('latest') }}"
-        group_id: "{{ group_id }}"
+        group_id: "{{ group_id | default('demo-pattern') }}"
         encoding: ascii
   rules:
     - name: match kafka event
