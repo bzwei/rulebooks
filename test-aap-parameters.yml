@@ -17,7 +17,7 @@
     # Default values - can be overridden via extra_vars from workflow
     app_name: "test-app"
     app_version: "1.0.0"
-    deployment_env: "development"  # Renamed from 'environment' (reserved in Ansible)
+    deployment_env: "development" # Renamed from 'environment' (reserved in Ansible)
     operation: "status"
     custom_message: "Hello from Nexus Workflow!"
 
@@ -67,23 +67,7 @@
         - disk
         - monitoring
 
-    # Task 4: Memory check (tagged: memory, monitoring)
-    - name: Check memory usage
-      ansible.builtin.shell: free -h
-      register: memory_usage
-      changed_when: false
-      tags:
-        - memory
-        - monitoring
-
-    - name: Display memory usage
-      ansible.builtin.debug:
-        msg: "{{ memory_usage.stdout_lines }}"
-      tags:
-        - memory
-        - monitoring
-
-    # Task 5: Deployment simulation (tagged: deploy)
+    # Task 4: Deployment simulation (tagged: deploy)
     - name: Simulate application deployment
       ansible.builtin.debug:
         msg:
@@ -95,7 +79,7 @@
       tags:
         - deploy
 
-    # Task 6: Configuration check (tagged: config)
+    # Task 5: Configuration check (tagged: config)
     - name: Check configuration status
       ansible.builtin.debug:
         msg:
@@ -106,7 +90,7 @@
       tags:
         - config
 
-    # Task 7: Backup simulation (tagged: backup)
+    # Task 6: Backup simulation (tagged: backup)
     - name: Simulate backup operation
       ansible.builtin.debug:
         msg:
@@ -116,7 +100,7 @@
       tags:
         - backup
 
-    # Task 8: Health check (tagged: healthcheck, monitoring)
+    # Task 7: Health check (tagged: healthcheck, monitoring)
     - name: Perform health check
       ansible.builtin.debug:
         msg:
@@ -127,14 +111,14 @@
         - healthcheck
         - monitoring
 
-    # Task 9: Custom message display (tagged: custom)
+    # Task 8: Custom message display (tagged: custom)
     - name: Display custom message
       ansible.builtin.debug:
         msg: "{{ custom_message }}"
       tags:
         - custom
 
-    # Task 10: Credential verification (tagged: credentials)
+    # Task 9: Credential verification (tagged: credentials)
     - name: Display credential information
       ansible.builtin.debug:
         msg:
@@ -145,6 +129,24 @@
       tags:
         - credentials
 
+    # Task 10: Intentional failure test (tagged: fail_test)
+    # This task will fail when explicitly triggered via --tags fail_test
+    # It's useful for testing error handling and retry logic in workflows
+    - name: Test failure scenario
+      ansible.builtin.fail:
+        msg: |
+          >>> INTENTIONAL FAILURE <<<
+          This task is designed to fail for testing purposes.
+          Use --tags fail_test to trigger this failure.
+          This is useful for testing:
+            - Workflow error handling
+            - Retry policies
+            - Failure notifications
+      when: true
+      tags:
+        - fail_test
+        - never # 'never' tag ensures this won't run unless explicitly requested
+
     # Task 11: Summary (always runs)
     - name: Execution summary
       ansible.builtin.debug:
@@ -154,9 +156,10 @@
           - "Task tags available:"
           - "  - always, info: Basic information"
           - "  - system: System details"
-          - "  - monitoring: disk, memory, healthcheck"
+          - "  - monitoring: disk, healthcheck"
           - "  - deploy, config, backup: Operations"
           - "  - credentials: Shows which credential/user is being used"
+          - "  - fail_test: Intentional failure (use with --tags fail_test)"
           - "Use --tags or --skip-tags to control task execution"
       tags:
         - always
@@ -183,3 +186,9 @@
 #
 # 7. Increase verbosity:
 #    ansible-playbook test-aap-parameters.yml -vvv
+#
+# 8. Test failure handling (runs the fail_test task):
+#    ansible-playbook test-aap-parameters.yml --tags fail_test
+#
+# 9. Test failure with other tasks:
+#    ansible-playbook test-aap-parameters.yml --tags "info,fail_test"
